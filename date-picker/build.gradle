@@ -1,0 +1,32 @@
+apply plugin: 'com.android.library'
+version = "2.2.0"
+android {
+    compileSdkVersion 29
+    buildToolsVersion "28.0.3"
+    resourcePrefix "aigestudio_datepicker"
+    defaultConfig {
+        minSdkVersion 17
+        targetSdkVersion 29
+        versionCode 9
+        versionName version
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    productFlavors {
+    }
+}
+dependencies {
+    compileOnly "com.android.support:support-annotations:28"
+    testImplementation "junit:junit:4.12"
+    androidTestImplementation "androidx.test:runner:1.2.0"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.2.0"
+    compileOnly "joda-time:joda-time:2.10.3"
+    compileOnly "com.google.android.material:material:1.0.0"
+}
+
+
+apply from: "https://gist.githubusercontent.com/rtugeek/4c35db8349aca4981e0e7a526ce4c429/raw/cc23fca3a22b2551e43bfb417acbd20a9633a47e/gradle-mvn-push.gradle"

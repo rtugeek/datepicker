@@ -1,0 +1,1 @@
+[{"outputType":{"type":"MERGED_MANIFESTS"},"apkData":{"type":"MAIN","splits":[],"versionCode":9,"versionName":"2.2.0","enabled":true,"outputFile":"date-picker-debug.aar","fullName":"debug","baseName":"debug"},"path":"../../library_manifest/debug/AndroidManifest.xml","properties":{"packageId":"cn.aigestudio.datepicker","split":""}}]
