@@ -109,7 +109,7 @@ public class Lunar {
         if (day == 10) {
             return "初十";
         } else if (day == 20) {
-            return "廿十";
+            return "二十";
         } else if (day == 30) {
             return "三十";
         } else {

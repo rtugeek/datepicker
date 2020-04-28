@@ -306,7 +306,7 @@ public class DPCNCalendar extends DPCalendar {
                 }
             } else if (c[0] == '2') {
                 if (c[1] == '0') {
-                    result = LUNAR_HEADER[2] + LUNAR_HEADER[1];
+                    result = NUMBER_CAPITAL[2] + LUNAR_HEADER[1];
                 } else {
                     for (int i = 1; i < 10; i++) {
                         if (c[1] == String.valueOf(i).charAt(0)) {
