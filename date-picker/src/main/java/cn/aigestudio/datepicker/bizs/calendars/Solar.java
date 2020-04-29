@@ -60,4 +60,8 @@ public class Solar {
     public DateTime toDateTime() {
         return new LocalDate(year, month, dayOfMonth).toDateTimeAtStartOfDay();
     }
+
+    public LocalDate toLocalDate() {
+        return new LocalDate(year, month, dayOfMonth);
+    }
 }

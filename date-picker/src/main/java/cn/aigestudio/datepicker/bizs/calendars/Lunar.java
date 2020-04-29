@@ -102,7 +102,7 @@ public class Lunar {
     }
 
 
-    private static String getChinaDayString(int day) {
+    public static String getChinaDayString(int day) {
         if (day > 30) {
             return "";
         }
