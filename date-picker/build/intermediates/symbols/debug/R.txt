@@ -1,7 +1,0 @@
-int drawable aigestudio_datepicker_nong_bg 0x7f080001
-int id aigestudio_datepicker_tv_nong 0x7f0b0001
-int string aigestudio_datepicker_confirm 0x7f140001
-int string aigestudio_datepicker_gregorian 0x7f140002
-int string aigestudio_datepicker_lunar 0x7f140003
-int string aigestudio_datepicker_nong 0x7f140004
-int string aigestudio_datepicker_year 0x7f140005

@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="aigestudio_datepicker_tv_nong" type="id"/>
-    <string name="aigestudio_datepicker_confirm">确定</string>
-    <string name="aigestudio_datepicker_gregorian">公历</string>
-    <string name="aigestudio_datepicker_lunar">农历</string>
-    <string name="aigestudio_datepicker_nong">农</string>
-    <string name="aigestudio_datepicker_year">年份</string>
-</resources>

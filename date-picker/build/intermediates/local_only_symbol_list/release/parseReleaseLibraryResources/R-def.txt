@@ -1,9 +1,0 @@
-R_DEF: Internal format may change without notice
-local
-drawable aigestudio_datepicker_nong_bg
-id aigestudio_datepicker_tv_nong
-string aigestudio_datepicker_confirm
-string aigestudio_datepicker_gregorian
-string aigestudio_datepicker_lunar
-string aigestudio_datepicker_nong
-string aigestudio_datepicker_year
