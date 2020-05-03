@@ -1,75 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-    <data>
-        <variable
-            name="tManager"
-            type="com.rtugeek.datepicker.bizs.themes.DPTManager" />
-    </data>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:animateLayoutChanges="true"
-        android:background="@{tManager.colorTitleBG()}"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:orientation="horizontal"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/linear_date"
+        android:layout_width="wrap_content"
         android:orientation="horizontal"
-        android:padding="10dp">
-
-        <LinearLayout
-            android:id="@+id/linear_date"
-            android:layout_width="wrap_content"
-            android:orientation="horizontal"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/tv_year"
-                android:layout_marginRight="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="@{tManager.colorTitle()}"
-                android:textSize="16sp"
-                tools:text="2020年" />
-
-            <TextView
-                android:id="@+id/tv_date"
-                android:layout_toEndOf="@id/tv_year"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:textColor="@{tManager.colorTitle()}"
-                android:textSize="16sp"
-                tools:text="06月04日" />
-
-            <ImageView
-                android:src="@drawable/swap_horizontal"
-                android:layout_marginRight="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_gravity="center_vertical"
-                android:tint="@{tManager.colorTitle()}"
-                android:layout_width="20dp"
-                android:layout_height="20dp"/>
-
-            <TextView
-                android:id="@+id/tv_date_2"
-                android:layout_toEndOf="@id/tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:textColor="@{tManager.colorTitle()}"
-                android:textSize="12sp"
-                tools:text="四月初四" />
-        </LinearLayout>
-
+        android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/tv_confirm"
+            android:id="@+id/tv_year"
+            android:layout_marginRight="8dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:textColor="@{tManager.colorTitle()}"
             android:layout_centerVertical="true"
-            android:layout_gravity="end"
             android:textSize="16sp"
-            tools:text="确定" />
-    </RelativeLayout>
-</layout>
+            tools:text="2020年" />
+
+        <TextView
+            android:id="@+id/tv_date"
+            android:layout_toEndOf="@id/tv_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:textSize="16sp"
+            tools:text="06月04日" />
+
+        <ImageView
+            android:id="@+id/img_swap"
+            android:src="@drawable/swap_horizontal"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="20dp"
+            android:layout_height="20dp"/>
+
+        <TextView
+            android:id="@+id/tv_date_2"
+            android:layout_toEndOf="@id/tv_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textSize="12sp"
+            tools:text="四月初四" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="end"
+        android:textSize="16sp"
+        tools:text="确定" />
+</RelativeLayout>

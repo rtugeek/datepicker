@@ -21,9 +21,6 @@ android {
     }
     productFlavors {
     }
-    dataBinding {
-        enabled = true
-    }
 }
 dependencies {
     compileOnly "com.android.support:support-annotations:28"

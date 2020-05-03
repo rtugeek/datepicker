@@ -2,6 +2,7 @@ package com.rtugeek.datepicker.views;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.ColorStateList;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.style.AbsoluteSizeSpan;
@@ -10,6 +11,7 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -32,7 +34,6 @@ import com.rtugeek.datepicker.bizs.themes.DPTManager;
 import com.rtugeek.datepicker.bizs.themes.DPTheme;
 import com.rtugeek.datepicker.cons.DPMode;
 import com.rtugeek.datepicker.cons.DateType;
-import com.rtugeek.datepicker.databinding.RtugeekDatepickerTitleBinding;
 import com.rtugeek.datepicker.utils.MeasureUtil;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -45,10 +46,8 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 public class DatePicker extends LinearLayout {
     private DPTManager mTManager;// 主题管理器
     private DPLManager mLManager;// 语言管理器
-    private RtugeekDatepickerTitleBinding titleBinding;
     private MonthView monthView;// 月视图
-    private TextView tvDateType;// 年份 月份显示
-    private TextView tvEnsure;// 确定按钮显示
+    private TextView tvConfirm, tvYear, tvDate1, tvDate2;// 年份 月份显示
     private short[] years = new short[199];
     private String[] yearsString = new String[199];
     private final short startYear = 1901;
@@ -63,6 +62,7 @@ public class DatePicker extends LinearLayout {
     private Solar selectedSolar;
     AlertDialog yearPicker;
     private boolean showGuide = false;
+
     /**
      * 日期选择回调
      */
@@ -95,8 +95,6 @@ public class DatePicker extends LinearLayout {
         mTManager = DPTManager.getInstance();
         mTManager.initCalendar(dpTheme);
         mLManager = DPLManager.getInstance();
-        titleBinding = RtugeekDatepickerTitleBinding.inflate(LayoutInflater.from(context));
-        titleBinding.setTManager(mTManager);
         // 设置排列方向为竖向
         setOrientation(VERTICAL);
 
@@ -148,45 +146,37 @@ public class DatePicker extends LinearLayout {
                     }
                 }).create();
 
-        titleBinding.tvYear.setOnClickListener(new OnClickListener() {
+        View titleView = LayoutInflater.from(context).inflate(R.layout.rtugeek_datepicker_title, null);
+        titleView.findViewById(R.id.root).setBackgroundColor(mTManager.colorTitleBG());
+        ((ImageView) titleView.findViewById(R.id.img_swap)).setColorFilter(mTManager.colorTitle());
+        //年份
+        tvYear = titleView.findViewById(R.id.tv_year);
+        tvYear.setTextColor(mTManager.colorTitle());
+        tvYear.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 yearPicker.show();
                 yearPicker.getListView().setSelection(monthView.getCurrentYear() - startYear);
             }
         });
-        //
-        tvDateType = new TextView(context);
-        tvDateType.setId(R.id.rtugeek_datepicker_tv_nong);
-        tvDateType.setBackgroundResource(R.drawable.rtugeek_datepicker_nong_bg);
-        tvDateType.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        tvDateType.setTextAlignment(TEXT_ALIGNMENT_CENTER);
-        tvDateType.setPadding(MeasureUtil.dp2px(context, 4), 0, MeasureUtil.dp2px(context, 4), 0);
-        tvDateType.setTextColor(mTManager.colorTitle());
-        tvDateType.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setDateType(DatePicker.this.dateType == DateType.SOLAR ? DateType.LUNAR : DateType.SOLAR);
-            }
-        });
 
-        // 确定显示
-        tvEnsure = new TextView(context);
-        tvEnsure.setText(mLManager.titleEnsure());
-        tvEnsure.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 16);
-        tvEnsure.setTextColor(mTManager.colorTitle());
-        tvEnsure.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != onDateSelectedListener) {
-                    onDateSelectedListener.onDateSelected(monthView.getDateSelected());
-                }
-            }
-        });
+        // 公历，阳历
+        tvDate1 = titleView.findViewById(R.id.tv_date);
+        tvDate1.setTextColor(mTManager.colorTitle());
 
-        // 公历农历显示
-        titleBinding.tvConfirm.setText(context.getString(android.R.string.ok));
-        titleBinding.tvConfirm.setOnClickListener(new OnClickListener() {
+        tvDate2 = titleView.findViewById(R.id.tv_date_2);
+        tvDate2.setTextColor(mTManager.colorTitle());
+
+
+        SwapDateTypeListener swapDateTypeListener = new SwapDateTypeListener();
+        tvDate2.setOnClickListener(swapDateTypeListener);
+        tvDate1.setOnClickListener(swapDateTypeListener);
+
+        //确定按钮
+        tvConfirm = titleView.findViewById(R.id.tv_confirm);
+        tvConfirm.setTextColor(mTManager.colorTitle());
+        tvConfirm.setText(context.getString(android.R.string.ok));
+        tvConfirm.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (onDatePickedListener != null) {
@@ -195,14 +185,7 @@ public class DatePicker extends LinearLayout {
             }
         });
 
-        rlTitle.addView(tvDateType, lpDateType);
-        rlTitle.addView(tvEnsure, lpEnsure);
-
-        SwapDateTypeListener swapDateTypeListener = new SwapDateTypeListener();
-        titleBinding.tvDate2.setOnClickListener(swapDateTypeListener);
-        titleBinding.tvDate.setOnClickListener(swapDateTypeListener);
-
-        addView(titleBinding.getRoot(), llParams);
+        addView(titleView, llParams);
 
         // --------------------------------------------------------------------------------周视图
         for (int i = 0; i < mLManager.titleWeek().length; i++) {
@@ -243,9 +226,9 @@ public class DatePicker extends LinearLayout {
         @Override
         public void onClick(View view) {
 
-            if(dateType == DateType.LUNAR){
+            if (dateType == DateType.LUNAR) {
                 DatePicker.this.dateType = DateType.SOLAR;
-            }else{
+            } else {
                 DatePicker.this.dateType = DateType.LUNAR;
             }
             updateDateText();
@@ -271,18 +254,16 @@ public class DatePicker extends LinearLayout {
         builder.setSpan(solarSizeSpan, 0, solarLength, SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
         builder.setSpan(lunarSizeSpan, solarLength, builder.length(), SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        titleBinding.tvYear.setText(monthView.getCurrentYear() + "年");
+        tvYear.setText(monthView.getCurrentYear() + "年");
         String solarDate = dateFormat.format(new Date(calendar.getTimeInMillis()));
         String lunarDate = lunar.toStringWithoutYear();
-        if(dateType == DateType.LUNAR){
-            titleBinding.tvDate.setText(lunarDate);
-            titleBinding.tvDate2.setText(solarDate);
-        }else{
-            titleBinding.tvDate.setText(solarDate);
-            titleBinding.tvDate2.setText(lunarDate);
+        if (dateType == DateType.LUNAR) {
+            tvDate1.setText(lunarDate);
+            tvDate2.setText(solarDate);
+        } else {
+            tvDate1.setText(solarDate);
+            tvDate2.setText(lunarDate);
         }
-
-        //        todo tvDate.setText(builder);
     }
 
     /**
@@ -312,11 +293,6 @@ public class DatePicker extends LinearLayout {
      * @param mode ...
      */
     public void setMode(DPMode mode) {
-        if (mode == DPMode.SINGLE) {
-            tvEnsure.setVisibility(GONE);
-        } else {
-            titleBinding.tvConfirm.setVisibility(GONE);
-        }
         monthView.setDPMode(mode);
     }
 
