@@ -6,10 +6,9 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import cn.aigestudio.datepicker.bizs.themes.ITimeTheme
-import cn.aigestudio.datepicker.cons.DPMode
-import cn.aigestudio.datepicker.cons.DateType
-import cn.aigestudio.datepicker.views.DatePicker
+import com.rtugeek.datepicker.cons.DPMode
+import com.rtugeek.datepicker.cons.DateType
+import com.rtugeek.datepicker.views.DatePicker
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -22,8 +21,8 @@ class MainActivity : AppCompatActivity() {
 
         tv_pick.setOnClickListener {
 
-            val momentTheme = ITimeTheme(Color.BLACK)
-            val datePicker = DatePicker(this, momentTheme, DateType.SOLAR)
+            val theme = ITimeTheme(Color.BLACK)
+            val datePicker = DatePicker(this, theme, DateType.SOLAR)
             datePicker.setDate(2020, 4,5)
             datePicker.setMode(DPMode.SINGLE)
             val chineseDatePickerDialog = AlertDialog.Builder(this).create()
